@@ -1,12 +1,36 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Wizard, Steps, Step, WithWizard } from "react-multistep-wizard";
+import "./styles.css";
+import One from "./Pages/One";
+import Two from "./Pages/Two";
+import Three from "./Pages/Three";
+import Four from "./Pages/Four";
+import Five from "./Pages/Five";
 
 const steps = [1, 2, 3, 4, 5];
 
 const App = () => {
   const [step, setStep] = React.useState(1);
   const [currentStep, setCurrentStep] = useState(1);
+
+  const renderStepContent = (step) => {
+    switch (step) {
+      case 1:
+        return <One />;
+      case 2:
+        return <Two />;
+      case 3:
+        return <Three />;
+      case 4:
+        return <Four />;
+      case 5:
+        return <Five />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
       style={{
@@ -15,16 +39,16 @@ const App = () => {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        height: "100vh"
+        height: "100vh",
       }}
     >
-      <h1>React Multistep Wizard ok</h1>
+      <h1>React Multistep Wizard </h1>
       <Wizard
         externalOverrides={{
           currentStep: step,
           jump: (p) => setStep(p),
           previous: () => setStep((step) => step - 1),
-          next: () => setStep((step) => step + 1)
+          next: () => setStep((step) => step + 1),
         }}
       >
         <div>
@@ -38,15 +62,8 @@ const App = () => {
                 >
                   <div
                     className={`${
-                      currentStep === step ? "bg-blue-500" : "invisible"
-                    } my-4 rounded-full`}
-                  >
-                    <div className="text-white"> Icon </div>
-                  </div>
-                  <div
-                    className={`${
-                      currentStep === step ? "bg-green-600" : ""
-                    } border rounded-full border-gray-800 hover:bg-blue-500 hover:text-white`}
+                      currentStep === step ? "bg-blue-500 text-white" : ""
+                    }  rounded-full  hover:bg-white hover:text-black`}
                   >
                     {step}
                   </div>
@@ -59,11 +76,9 @@ const App = () => {
           {steps.map((step) => (
             <Step key={step}>
               {(ctx) => (
-                <div>
-                  {/* <h1 style={{ textAlign: "center" }}>{step}</h1> */}
+                <div className="lg:w-2/5 md:w-5/3 sm:w-5/5">
                   {setCurrentStep(step)}
-                  <p>Current Step {currentStep} </p>
-                  
+                  {renderStepContent(step)} {/* Render the step content */}
                 </div>
               )}
             </Step>
@@ -73,5 +88,6 @@ const App = () => {
     </div>
   );
 };
+
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
