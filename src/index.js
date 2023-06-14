@@ -51,19 +51,26 @@ const App = () => {
           next: () => setStep((step) => step + 1),
         }}
       >
-        <div>
+        <div className="step-wizard-list">
           <WithWizard>
             {(ctx) =>
               steps.map((step) => (
                 <button
+                  className="step-wizard-item"
                   style={{ width: "40px", fontSize: "25px", margin: "16px" }}
                   key={step}
                   onClick={() => ctx.jump(step)}
                 >
                   <div
+                    style={{
+                      height: "40px",
+                      width: "40px",
+                      borderRadius: "50%",
+                      border: "1px solid white",
+                    }}
                     className={`${
-                      currentStep === step ? "bg-blue-500 text-white" : ""
-                    }  rounded-full  hover:bg-white hover:text-black`}
+                      currentStep === step ? "progress-count" : ""
+                    }  rounded-full`}
                   >
                     {step}
                   </div>
@@ -76,7 +83,7 @@ const App = () => {
           {steps.map((step) => (
             <Step key={step}>
               {(ctx) => (
-                <div className="lg:w-2/5 md:w-5/3 sm:w-5/5">
+                <div className="lg:w-2/5 md:w-5/3 sm:w-5/5 ">
                   {setCurrentStep(step)}
                   {renderStepContent(step)} {/* Render the step content */}
                 </div>
